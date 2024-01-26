@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer base {
+  input {
+    font-weight: 300;
+    color: rgb(55, 55, 55);
+    font-size: 14px;
+  }
+}
