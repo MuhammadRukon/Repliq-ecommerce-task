@@ -12,7 +12,7 @@ const DashboardLayout = () => {
   };
 
   return (
-    <div className="relative min-h-screen bg-[#EBF1FF] py-[25px] md:flex">
+    <div className="relative min-h-screen bg-[#def5ff] py-[25px] md:flex">
       {/* Sidebar Component */}
       <Sidebar isActive={isActive} handleToggle={handleToggle} />
       <div className="flex-1 mx-[25px] space-y-5">

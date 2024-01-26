@@ -18,8 +18,8 @@ const MenuItem = ({ label, address, icon: Icon }) => {
     >
       <Icon
         className={`${
-          active ? "bg-[#407Bff] text-white" : "bg-white text-[#407BFF]"
-        } w-8 h-8 p-1 transform duration-200 group-hover:text-white group-hover:bg-[#407Bff] rounded-xl`}
+          active ? "bg-[#48B7E9] text-white" : "bg-white text-[#48B7E9]"
+        } w-8 h-8 p-1 transform duration-200 group-hover:text-white group-hover:bg-[#48B7E9] rounded-xl`}
       />
 
       <span className="mx-4 font-medium">{label}</span>

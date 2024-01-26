@@ -1,14 +1,15 @@
 import React from "react";
 
-const AddUserModal = ({ onClose }) => {
+const AddCustomerModal = ({ onClose, data, setData }) => {
   // handle user file
   const handleAddUser = (e) => {
     e.preventDefault();
+    const id = data.length + 1;
     const name = e.target.name.value;
-    const email = e.target.email.value;
     const number = e.target.number.value;
-    const status = "Inactive";
-    console.log(name, email, number, status);
+    const email = e.target.email.value;
+    setData((prevVal) => [...prevVal, { id, name, number, email }]);
+    onClose();
   };
 
   return (
@@ -18,7 +19,7 @@ const AddUserModal = ({ onClose }) => {
         className="bg-white mx-8 rounded-md pt-5 pb-6 px-5"
       >
         <h2 className="text-center font-bold text-xl text-[#4d4d4d]">
-          Add User
+          Add Customer
         </h2>
         <div className="flex mt-4 gap-4">
           <input
@@ -46,9 +47,10 @@ const AddUserModal = ({ onClose }) => {
             className="px-3 py-1 bg-[#407Bff] rounded-md text-white"
             type="submit"
           >
-            Add user
+            Add
           </button>
           <button
+            type="button"
             className="px-3 py-1 bg-slate-400 rounded-md text-white"
             onClick={onClose}
           >
@@ -60,4 +62,4 @@ const AddUserModal = ({ onClose }) => {
   );
 };
 
-export default AddUserModal;
+export default AddCustomerModal;

@@ -1,29 +1,28 @@
 import React, { useEffect, useState } from "react";
 import DashboardContainer from "../../../components/DashboardContainer";
-import AddUserModal from "../../components/userManagement/AddUserModal";
+import AddCustomerModal from "../../components/customerManagement/AddCustomerModal";
+import axios from "axios";
+import { Link } from "react-router-dom";
 
-const UserManagement = () => {
-  const [users, setUsers] = useState(null);
+const CustomerList = () => {
+  const [customers, setCustomers] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
-  // fetching payment data
+  // fetch customer Data
   useEffect(() => {
-    fetch("/users.json")
-      .then((res) => res.json())
-      .then((data) => setUsers(data));
+    axios.get("/customer.json").then(({ data }) => setCustomers(data));
   }, []);
-
   return (
     <DashboardContainer>
       <div className="text-right mr-1">
         <button
           onClick={() => setShowModal(true)}
-          className=" mb-5 w-fit bg-[#407Bff] shadow-[5px_5px_7px_rgba(0,0,0,0.1)] px-3 py-1 rounded-md text-white "
+          className=" mb-5 w-fit bg-[#48B7E9] shadow-[5px_5px_7px_rgba(0,0,0,0.1)] px-3 py-1 rounded-md text-white "
         >
-          + Add user
+          + Add customer
         </button>
       </div>
-      <div className="md:max-w-[calc(100vw-375px)] overflow-scroll">
+      <div className="md:max-w-[calc(100vw-375px)] overflow-x-auto">
         <table className="w-full">
           {/* payment table head */}
           <thead>
@@ -41,9 +40,6 @@ const UserManagement = () => {
                 email
               </th>
               <th className="px-4 lg:px-5 py-[15px] bg-[#0000000A] border-gray-200 text-[#666]  text-left text-sm capitalize font-normal">
-                status
-              </th>
-              <th className="px-4 lg:px-5 py-[15px] bg-[#0000000A] border-gray-200 text-[#666]  text-left text-sm capitalize font-normal">
                 action
               </th>
             </tr>
@@ -51,72 +47,67 @@ const UserManagement = () => {
 
           <tbody>
             {/* payment data row */}
-            {users?.map((user) => (
-              <tr key={user.id}>
+            {customers?.map((customer) => (
+              <tr key={customer.id}>
                 {/* id */}
                 <td
                   className={`px-2 lg:px-5 py-[15px]  ${
-                    user?.id % 2 === 0 ? "bg-[#00000005]" : "bg-white"
+                    customer?.id % 2 === 0 ? "bg-[#00000005]" : "bg-white"
                   } border-gray-200 text-sm`}
                 >
-                  {user.id}
+                  {customer.id}
                 </td>
                 {/* name */}
                 <td
                   className={`px-2 lg:px-5 py-[15px]  ${
-                    user?.id % 2 === 0 ? "bg-[#00000005]" : "bg-white"
+                    customer?.id % 2 === 0 ? "bg-[#00000005]" : "bg-white"
                   } border-gray-200 text-sm`}
                 >
-                  {user.name}
+                  {customer.name}
                 </td>
                 {/* number */}
                 <td
                   className={`px-2 lg:px-5 py-[15px]  ${
-                    user?.id % 2 === 0 ? "bg-[#00000005]" : "bg-white"
+                    customer?.id % 2 === 0 ? "bg-[#00000005]" : "bg-white"
                   } border-gray-200 text-sm`}
                 >
-                  {user.number}
+                  {customer.number}
                 </td>
                 {/* email */}
                 <td
                   className={`px-2 lg:px-5 py-[15px]  ${
-                    user?.id % 2 === 0 ? "bg-[#00000005]" : "bg-white"
+                    customer?.id % 2 === 0 ? "bg-[#00000005]" : "bg-white"
                   } border-gray-200 text-sm`}
                 >
-                  {user.email}
-                </td>
-                {/* status */}
-                <td
-                  className={`px-2 lg:px-5 py-[15px]  ${
-                    user?.id % 2 === 0 ? "bg-[#00000005]" : "bg-white"
-                  } border-gray-200 text-sm`}
-                >
-                  <p
-                    className={` rounded-full w-fit text-white px-3 ${
-                      user.status === "active" || user.status === "Active"
-                        ? "bg-green-600"
-                        : "bg-red-600"
-                    }`}
-                  >
-                    {user.status}
-                  </p>
+                  {customer.email}
                 </td>
                 {/* action */}
                 <td
                   className={`px-2 lg:px-5 py-[15px]  ${
-                    user?.id % 2 === 0 ? "bg-[#00000005]" : "bg-white"
+                    customer?.id % 2 === 0 ? "bg-[#00000005]" : "bg-white"
                   } border-gray-200 text-sm`}
                 >
-                  action
+                  <Link
+                    to={`customer-details/${customer?.id}`}
+                    className="rounded-md w-fit text-white px-3 bg-[#48B7E9]"
+                  >
+                    view
+                  </Link>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-      {showModal && <AddUserModal onClose={() => setShowModal(false)} />}
+      {showModal && (
+        <AddCustomerModal
+          data={customers}
+          setData={setCustomers}
+          onClose={() => setShowModal(false)}
+        />
+      )}
     </DashboardContainer>
   );
 };
 
-export default UserManagement;
+export default CustomerList;
