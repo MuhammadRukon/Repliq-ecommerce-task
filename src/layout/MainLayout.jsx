@@ -11,10 +11,10 @@ const MainLayout = () => {
   return (
     <>
       <header className="bg-[#48B7E9] text-white py-4 relative">
-        <div className="container cursor-pointer mx-auto px-4 flex gap-3 items-center justify-between lg:px-20">
+        <div className="container  mx-auto px-4 flex gap-3 items-center justify-between lg:px-20">
           {/* logo */}
           <div
-            className="flex items-center gap-2"
+            className="flex items-center cursor-pointer gap-2"
             onClick={() => {
               navigate("/");
             }}

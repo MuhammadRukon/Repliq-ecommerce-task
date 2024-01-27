@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
+import { AuthContext } from "../provider/AuthProvider";
 
 const NavbarLinks = () => {
-  let user = false;
+  const { user, logout } = useContext(AuthContext);
   return (
     <>
       <NavLink
@@ -17,7 +18,30 @@ const NavbarLinks = () => {
       >
         Dashboard
       </NavLink>
-
+      {/* show items below if user exists */}
+      {user && (
+        <>
+          <NavLink
+            to="/products"
+            className="py-2 px-3 rounded-lg text-white hover:bg-white hover:text-[#262C6C] transform duration-300"
+          >
+            Products
+          </NavLink>
+          <NavLink
+            to="/cart"
+            className="py-2 px-3 rounded-lg text-white hover:bg-white hover:text-[#262C6C] transform duration-300"
+          >
+            Cart
+          </NavLink>
+          <button
+            onClick={logout}
+            className="py-2 px-3 rounded-lg text-white hover:bg-white hover:text-[#262C6C] transform duration-300"
+          >
+            Logout
+          </button>
+        </>
+      )}
+      {/* show items below if user doesn't exist */}
       {!user && (
         <>
           <NavLink
