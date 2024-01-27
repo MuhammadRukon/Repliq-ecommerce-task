@@ -1,16 +1,21 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../provider/AuthProvider";
 
 const LoginForm = () => {
+  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibnVtYmVyIjoiMDE4MTU3ODAwNTMiLCJwYXNzd29yZCI6ImhpcmVNZVBsZWFzZSIsIm5hbWUiOiJSb25hbGRvIiwiY29tcGFueSI6IlJlcGxpcSJ9.ANUYAQ_I5H3L0v49ULDZrZ3oEFE5CHB9X7RQu79dmK8';
   const navigate = useNavigate();
+  const { login } = useContext(AuthContext);
 
   const handleLogin = (e) => {
     e.preventDefault();
-    const email = e.target.email.value;
+    const number = e.target.number.value;
     const password = e.target.password.value;
     //handle validation and continue to next step if valid
-    console.table({ email, password });
-    navigate("/login/verification");
+    const res = login(number, password, token);
+    if(res){
+      navigate('/')
+    }
   };
   return (
     <>
@@ -21,11 +26,11 @@ const LoginForm = () => {
         className="flex  flex-col gap-5 my-6"
       >
         <input
-          type="email"
-          name="email"
-          id="email"
+          type="number"
+          name="number"
+          id="number"
           required
-          placeholder="Email-address"
+          placeholder="Phone number"
           className="border py-1 px-2 rounded-md border-[#e6e6e6]  focus:outline-[#e6e6e6]"
         ></input>
         <input
@@ -41,7 +46,7 @@ const LoginForm = () => {
             Don't have an account?
           </Link>
         </div>
-        <button className="bg-[#48B7E9] mx-auto text-white py-1 px-6 rounded-md w-fit">
+        <button  className="bg-[#48B7E9] mx-auto text-white py-1 px-6 rounded-md w-fit">
           Login
         </button>
       </form>

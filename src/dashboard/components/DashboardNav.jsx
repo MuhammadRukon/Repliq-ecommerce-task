@@ -1,20 +1,16 @@
 //icons
-import { useState } from "react";
+import { useContext } from "react";
 import { FaBars } from "react-icons/fa";
 import { FaSignOutAlt } from "react-icons/fa";
-import userPhoto from "./../../assets/user.jpeg";
 import defaultUser from "./../../assets/defaultUser.png";
+import { AuthContext } from "../../provider/AuthProvider";
 
 const DashboardNav = ({ handleToggle }) => {
-  //user
-  const [user, setUser] = useState({
-    company: "Repliq",
-    name: "ronaldo",
-    image: userPhoto,
-  });
+  const {user, logout} = useContext(AuthContext)
+
   //handle logout
   const handleLogout = () => {
-    console.log("logged out button clicked");
+    logout()
   };
 
   return (
@@ -28,8 +24,9 @@ const DashboardNav = ({ handleToggle }) => {
         />
         {/* user name and company */}
         <div className="text-white md:text-black">
-          <p className="text-xs">{user?.company || ""}</p>
-          <p className="text-xl">{user?.name || ""}</p>
+          <div className="flex items-center gap-2"><p className="text-xs">{user?.company || "no company"}</p> <div className="text-gray-300">|</div>
+          <p className="text-xs">{user?.phone || "no number"}</p></div>
+          <p className="text-xl">{user?.name || "no user"}</p>
         </div>
       </div>
       {/* top bar action */}
@@ -40,12 +37,12 @@ const DashboardNav = ({ handleToggle }) => {
         >
           <FaBars />
         </button>
-        <div
+      {user && <div
           onClick={handleLogout}
           className="bg-[#EBF1FF] w-[48px] h-[48px] sm:w-[54px] sm:h-[54px] hidden sm:flex justify-center items-center cursor-pointer rounded-full"
         >
           <FaSignOutAlt size={26} />
-        </div>
+        </div>}
       </div>
     </div>
   );

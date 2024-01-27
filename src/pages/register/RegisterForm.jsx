@@ -1,28 +1,35 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../provider/AuthProvider";
 
 const RegisterForm = () => {
+  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibnVtYmVyIjoiMDE4MTU3ODAwNTMiLCJwYXNzd29yZCI6ImhpcmVNZVBsZWFzZSIsIm5hbWUiOiJSb25hbGRvIiwiY29tcGFueSI6IlJlcGxpcSJ9.ANUYAQ_I5H3L0v49ULDZrZ3oEFE5CHB9X7RQu79dmK8';
   const navigate = useNavigate();
+  const {register}= useContext(AuthContext)
 
-  const handleLogin = (e) => {
+  const handleRegister = (e) => {
     e.preventDefault();
-    const email = e.target.email.value;
+    const number = e.target.number.value;
     const password = e.target.password.value;
+    const res = register(number, password, token);
+    if(res){
+      navigate('/')
+    }
   };
   return (
     <>
       <h2 className="text-center text-2xl mt-6">Register</h2>
       <form
         id="form"
-        onSubmit={handleLogin}
+        onSubmit={handleRegister}
         className="flex  flex-col gap-5 my-6"
       >
         <input
-          type="email"
-          name="email"
-          id="email"
+          type="number"
+          name="number"
+          id="number"
           required
-          placeholder="Email-address"
+          placeholder="Phone number"
           className="border py-1 px-2 rounded-md border-[#e6e6e6]  focus:outline-[#e6e6e6]"
         ></input>
         <input
@@ -34,7 +41,7 @@ const RegisterForm = () => {
           placeholder="password"
         ></input>
         <div className="flex justify-end items-center text-blue-600  px-1 text-xs -mt-3 ">
-          <Link to={"/register"} className="cursor-pointer">
+          <Link to={"/login"} className="cursor-pointer">
             Already have an account?
           </Link>
         </div>
